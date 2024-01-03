@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace 'ru.itis.cooking'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "ru.itis.cooking"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -31,7 +31,7 @@ android {
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
-                targetCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -46,6 +46,10 @@ android {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
+    }
+    lint {
+        disable "JvmStaticProvidesInObjectDetector", "FieldSiteTargetOnQualifierAnnotation",
+                "ModuleCompanionObjects", "ModuleCompanionObjectsNotInModuleParent"
     }
 }
 
