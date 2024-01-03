@@ -7,11 +7,10 @@ plugins {
 
 android {
     namespace = "ru.itis.cooking.core.domain"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 33
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
