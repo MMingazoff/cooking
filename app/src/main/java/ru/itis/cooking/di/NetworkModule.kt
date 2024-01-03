@@ -16,7 +16,7 @@ import ru.itis.cooking.core.data.util.NetworkHelper
 import ru.itis.cooking.core.domain.repository.LocalRepository
 import ru.itis.cooking.core.domain.repository.RemoteRepository
 import ru.itis.cooking.core.domain.usecase.base.AllUseCases
-import ru.itis.cooking.core.domain.usecase.local.dataStore.GetFoodTypeUseCase
+import ru.itis.cooking.core.domain.usecase.local.dataStore.GetFoodFiltersUseCase
 import ru.itis.cooking.core.domain.usecase.local.dataStore.GetThemeUseCase
 import ru.itis.cooking.core.domain.usecase.local.dataStore.GetUserVisitingUseCase
 import ru.itis.cooking.core.domain.usecase.local.dataStore.SaveFoodTypeUseCase
@@ -40,6 +40,7 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(ApiKeyInterceptor())
             .build()
     }
 
@@ -68,7 +69,7 @@ object NetworkModule {
         return AllUseCases(
             getAllRecipesUseCase = GetAllRecipesUseCase(remoteRepository),
             saveFoodTypeUseCase = SaveFoodTypeUseCase(localRepository),
-            getFoodTypeUseCase = GetFoodTypeUseCase(localRepository),
+            getFoodFiltersUseCase = GetFoodFiltersUseCase(localRepository),
             getFavoriteFoodByIdUseCase = GetFavoriteFoodByIdUseCase(localRepository),
             getFavoriteFoodsUseCase = GetFavoriteFoodsUseCase(localRepository),
             saveFavoriteFoodUseCase = SaveFavoriteFoodUseCase(localRepository),

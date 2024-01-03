@@ -77,29 +77,29 @@ class RoomUseCasesTest {
             ingredients = emptyList(),
             analyzedIns = emptyList()
         )
-        saveFavoriteFoodUseCase.invoke(fakeFood)
-        val result = getFavoriteFoodByIdUseCase.invoke(fakeFood.foodId).first()
+        saveFavoriteFoodUseCase(fakeFood)
+        val result = getFavoriteFoodByIdUseCase(fakeFood.foodId).first()
         assertThat(result).isEqualTo(fakeFood)
     }
 
     @Test
     fun `Get all favorite foods, returns not empty list`() = runBlocking {
-        val result = getFavoriteFoodsUseCase.invoke(Unit).first()
+        val result = getFavoriteFoodsUseCase().first()
         assertThat(result).isNotEmpty()
     }
 
     @Test
     fun `Delete favorite food by id`() = runBlocking {
-        deleteFavoriteFoodUseCase.invoke(11)
-        val result = getFavoriteFoodsUseCase.invoke(Unit).first()
+        deleteFavoriteFoodUseCase(11)
+        val result = getFavoriteFoodsUseCase().first()
         result.forEach {
             assertThat(it.foodId).isNotEqualTo(11)
         }
     }
     @Test
     fun `Clear favorite food list`() = runBlocking {
-        deleteAllFavoriteFoodsUseCase.invoke(Unit)
-        val result = getFavoriteFoodsUseCase.invoke(Unit).first()
+        deleteAllFavoriteFoodsUseCase()
+        val result = getFavoriteFoodsUseCase().first()
         assertThat(result).isEmpty()
     }
 }

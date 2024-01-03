@@ -27,5 +27,5 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.KotlinVersion)
+    implementation(libs.androidx.ktx)
 }

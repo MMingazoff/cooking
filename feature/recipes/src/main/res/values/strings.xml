@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="food_filters_meal_type_title">Meal type</string>
+    <string name="food_filters_diet_type_title">Diet Type</string>
+</resources>

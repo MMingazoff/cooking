@@ -1,12 +1,11 @@
 package ru.itis.cooking.core.data.local.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ru.itis.cooking.core.domain.model.Food
 import kotlinx.coroutines.flow.Flow
+import ru.itis.cooking.core.domain.model.Food
 
 @Dao
 interface FoodDao {

@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ru.itis.cooking.core.data.util.Constants
 import ru.itis.cooking.core.domain.model.InsIngredient
@@ -24,6 +25,7 @@ import ru.itis.cooking.core.domain.model.InsStep
 import ru.itis.cooking.core.ui.components.AppImage
 import ru.itis.cooking.core.ui.components.AppText
 import ru.itis.cooking.core.ui.theme.ItimFont
+import ru.itis.cooking.details.R
 
 @Composable
 fun InstructionItem(
@@ -39,7 +41,7 @@ fun InstructionItem(
             modifier = Modifier.padding(10.dp)
         ) {
             AppText(
-                text = "Step ${insStep.number}.",
+                text = stringResource(id = R.string.step, insStep.number),
                 size = 22,
                 color = MaterialTheme.colorScheme.onSecondary,
                 fontFamily = ItimFont,
@@ -54,11 +56,13 @@ fun InstructionItem(
                 maxLine = Int.MAX_VALUE
             )
             LazyRow(
-                modifier = Modifier.fillMaxWidth().padding(top = 10.dp, bottom = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp, bottom = 4.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 items(insStep.ingredients) {
-                    InsIngredientItem(insIngredient = it)
+                    InstructionIngredientItem(insIngredient = it)
                 }
             }
         }
@@ -66,7 +70,7 @@ fun InstructionItem(
 }
 
 @Composable
-fun InsIngredientItem(
+fun InstructionIngredientItem(
     insIngredient: InsIngredient,
 ) {
     Column(

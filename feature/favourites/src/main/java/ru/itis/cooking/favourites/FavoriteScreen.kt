@@ -31,21 +31,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import ru.itis.cooking.core.navigation.Graph
 import ru.itis.cooking.core.ui.components.LoadingIcon
 import ru.itis.cooking.core.ui.components.LottieAnim
 import ru.itis.cooking.core.ui.theme.AppFont
 import ru.itis.cooking.core.ui.theme.Purple80
+import ru.itis.cooking.favourites.uiElements.RecipeItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoriteScreen(navHostController: NavHostController) {
     val viewModel: FavoriteViewModel = hiltViewModel()
-    val state = viewModel.state.value
+    val state = viewModel.state.collectAsStateWithLifecycle().value
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,7 +60,7 @@ fun FavoriteScreen(navHostController: NavHostController) {
         TopAppBar(
             title = {
                 Text(
-                    text = "Favorites",
+                    text = stringResource(id = R.string.favourites_title),
                     fontFamily = AppFont,
                     color = MaterialTheme.colorScheme.onSecondary
                 )
@@ -94,7 +98,7 @@ fun FavoriteScreen(navHostController: NavHostController) {
     if (state.foodList.isNotEmpty()) {
         DeleteFab(
             onDeleteClicked = {
-                viewModel.onEvent(FavoriteEvent.OnDeleteAllFavoriteFoods)
+                viewModel.accept(FavoritesEvent.DeleteAllFavoriteFoods)
             }
         )
     }
@@ -114,7 +118,6 @@ fun DeleteFab(
             exit = fadeOut(animationSpec = tween(300))
         ) {
             AlertDialog(
-//                containerColor = ,
                 onDismissRequest = {
                     isAlertVisible = false
                 },
@@ -123,26 +126,32 @@ fun DeleteFab(
                         onDeleteClicked()
                         isAlertVisible = false
                     }) {
-                        Text(text = "Delete", color = MaterialTheme.colorScheme.onSecondary)
+                        Text(
+                            text = stringResource(id = R.string.delete_favourites_alert_confirm),
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = {
                         isAlertVisible = false
                     }) {
-                        Text(text = "Cancel", color = MaterialTheme.colorScheme.onSecondary)
+                        Text(
+                            text = stringResource(id = R.string.delete_favourites_alert_cancel),
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
                     }
                 },
                 title = {
                     Text(
-                        text = "Delete all favorite foods",
+                        text = stringResource(id = R.string.favourites_title),
                         fontSize = 18.sp,
                         color = MaterialTheme.colorScheme.onSecondary
                     )
                 },
                 text = {
                     Text(
-                        text = "This action cannot be undone",
+                        text = stringResource(id = R.string.delete_favourites_alert_subtitle),
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.onSecondary
                     )

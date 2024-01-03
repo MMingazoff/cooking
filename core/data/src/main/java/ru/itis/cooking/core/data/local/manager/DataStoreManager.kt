@@ -1,38 +1,28 @@
 package ru.itis.cooking.core.data.local.manager
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import ru.itis.cooking.core.domain.model.FoodType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ru.itis.cooking.core.domain.model.FoodFilters
 
 class DataStoreManager(private val context: Context) {
-    private val Context.dataStore by preferencesDataStore("DishDataStore")
 
-    companion object {
-        val mIndex = intPreferencesKey("mIndex")
-        val mType = stringPreferencesKey("mType")
-        val dIndex = intPreferencesKey("dIndex")
-        val dType = stringPreferencesKey("dType")
-
-        val themIndex = intPreferencesKey("themeIndex")
-
-        val isUserVisited = booleanPreferencesKey("isUserVisited")
-    }
-
-    suspend fun saveMealType(foodType: FoodType) {
+    suspend fun saveMealType(foodFilters: FoodFilters) {
         context.dataStore.edit {
-            it[mIndex] = foodType.mIndex
-            it[mType] = foodType.mType
-            it[dIndex] = foodType.dIndex
-            it[dType] = foodType.dType
+            it[mIndex] = foodFilters.mIndex
+            it[mType] = foodFilters.mType
+            it[dIndex] = foodFilters.dIndex
+            it[dType] = foodFilters.dType
         }
     }
 
-    fun getFoodType() = context.dataStore.data.map {
-        FoodType(
+    fun getFoodFilters() = context.dataStore.data.map {
+        FoodFilters(
             mIndex = it[mIndex] ?: 0,
             mType = it[mType] ?: "Main Course",
             dIndex = it[dIndex] ?: 0,
@@ -58,5 +48,19 @@ class DataStoreManager(private val context: Context) {
 
     fun getUserVisiting(): Flow<Boolean> = context.dataStore.data.map {
         it[isUserVisited] ?: false
+    }
+
+    companion object {
+
+        private val Context.dataStore by preferencesDataStore("DishDataStore")
+
+        private val mIndex = intPreferencesKey("mIndex")
+        private val mType = stringPreferencesKey("mType")
+        private val dIndex = intPreferencesKey("dIndex")
+        private val dType = stringPreferencesKey("dType")
+
+        private val themIndex = intPreferencesKey("themeIndex")
+
+        private val isUserVisited = booleanPreferencesKey("isUserVisited")
     }
 }

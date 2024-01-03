@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.itis.cooking.core.domain.model.AnalyzedInstructions
 
-
 class AnalyzedInstructionsConverter {
 
     @TypeConverter

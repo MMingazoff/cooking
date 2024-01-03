@@ -3,7 +3,7 @@ package ru.itis.cooking.core.data.repository
 import ru.itis.cooking.core.data.local.database.FoodDao
 import ru.itis.cooking.core.data.local.manager.DataStoreManager
 import ru.itis.cooking.core.domain.model.Food
-import ru.itis.cooking.core.domain.model.FoodType
+import ru.itis.cooking.core.domain.model.FoodFilters
 import ru.itis.cooking.core.domain.repository.LocalRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -12,12 +12,13 @@ class LocalRepositoryImpl @Inject constructor(
     private val dataStoreManager: DataStoreManager,
     private val dao: FoodDao
 ) : LocalRepository {
-    override suspend fun saveFoodType(foodType: FoodType) {
-        dataStoreManager.saveMealType(foodType)
+
+    override suspend fun saveFoodType(foodFilters: FoodFilters) {
+        dataStoreManager.saveMealType(foodFilters)
     }
 
-    override fun getFoodType(): Flow<FoodType> {
-        return dataStoreManager.getFoodType()
+    override fun getFoodFilters(): Flow<FoodFilters> {
+        return dataStoreManager.getFoodFilters()
     }
 
     override suspend fun saveTheme(index: Int) {

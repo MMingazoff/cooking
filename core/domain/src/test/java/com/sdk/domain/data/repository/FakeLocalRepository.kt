@@ -1,7 +1,7 @@
 package com.sdk.domain.data.repository
 
 import ru.itis.cooking.core.domain.model.Food
-import ru.itis.cooking.core.domain.model.FoodType
+import ru.itis.cooking.core.domain.model.FoodFilters
 import ru.itis.cooking.core.domain.repository.LocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -9,16 +9,16 @@ import kotlinx.coroutines.flow.flow
 class FakeLocalRepository : LocalRepository {
 
     private val fakeFoodList = mutableListOf<Food>()
-    private var foodType = FoodType()
+    private var foodFilters = FoodFilters()
     private var isUserVisited = false
     private var savedIndex = 0
 
-    override suspend fun saveFoodType(foodType: FoodType) {
-        this.foodType = foodType
+    override suspend fun saveFoodType(foodFilters: FoodFilters) {
+        this.foodFilters = foodFilters
     }
 
-    override fun getFoodType(): Flow<FoodType> {
-        return flow { emit(foodType) }
+    override fun getFoodFilters(): Flow<FoodFilters> {
+        return flow { emit(foodFilters) }
     }
 
     override suspend fun saveTheme(index: Int) {

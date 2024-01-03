@@ -1,7 +1,7 @@
 package ru.itis.cooking.core.domain.usecase.base
 
 import ru.itis.cooking.core.domain.usecase.remote.GetAllRecipesUseCase
-import ru.itis.cooking.core.domain.usecase.local.dataStore.GetFoodTypeUseCase
+import ru.itis.cooking.core.domain.usecase.local.dataStore.GetFoodFiltersUseCase
 import ru.itis.cooking.core.domain.usecase.local.dataStore.GetThemeUseCase
 import ru.itis.cooking.core.domain.usecase.local.dataStore.GetUserVisitingUseCase
 import ru.itis.cooking.core.domain.usecase.local.dataStore.SaveFoodTypeUseCase
@@ -15,7 +15,7 @@ import ru.itis.cooking.core.domain.usecase.local.room.SaveFavoriteFoodUseCase
 
 data class AllUseCases(
     val getAllRecipesUseCase: GetAllRecipesUseCase,
-    val getFoodTypeUseCase: GetFoodTypeUseCase,
+    val getFoodFiltersUseCase: GetFoodFiltersUseCase,
     val saveFoodTypeUseCase: SaveFoodTypeUseCase,
     val deleteFavoriteFoodUseCase: DeleteFavoriteFoodUseCase,
     val getFavoriteFoodByIdUseCase: GetFavoriteFoodByIdUseCase,

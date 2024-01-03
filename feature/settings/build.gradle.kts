@@ -34,21 +34,22 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.KotlinVersion)
-    implementation(Dependencies.LifeCycleKtx)
-    implementation(Dependencies.AppCompat)
-    implementation(Dependencies.ComposeUi)
-    implementation(Dependencies.CompPreview)
-    implementation(Dependencies.MaterialDesign)
+    implementation(libs.androidx.ktx)
+    implementation(libs.lifecycle.ktx)
+    implementation(libs.activity.compose)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material)
 
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:architecture"))
 
     // Hilt
-    implementation(Dependencies.Hilt)
-    kapt(Dependencies.KaptHilt)
-    implementation(Dependencies.HiltVM)
-    kapt(Dependencies.CompHilt)
-    implementation(Dependencies.HiltNavigation)
+    implementation(libs.hilt)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.hilt.viewmodel)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
 }

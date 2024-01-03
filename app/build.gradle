@@ -1,148 +1,3 @@
-/*
-plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
-    id("dagger.hilt.android.plugin")
-}
-
-@Suppress("UnstableApiUsage")
-android {
-    namespace = "ru.itis.cooking"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 33
-
-        testInstrumentationRunner = "com.sdk.foddy.HiltTestRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-    }
-
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            setProguardFiles(
-                listOf(
-                    getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-                )
-            )
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
-    }
-}
-
-dependencies {
-
-    implementation(Dependencies.KotlinVersion)
-    implementation(Dependencies.LifeCycleKtx)
-    implementation(Dependencies.AppCompat)
-    implementation(Dependencies.ComposeUi)
-    implementation(Dependencies.CompPreview)
-    implementation(Dependencies.MaterialDesign)
-    implementation(Dependencies.ComposeNavigation)
-
-    implementation(project(":core:data"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:navigation"))
-    implementation(project(":core:ui"))
-
-    implementation(project(":feature:details"))
-    implementation(project(":feature:favourites"))
-    implementation(project(":feature:onboarding"))
-    implementation(project(":feature:recipes"))
-    implementation(project(":feature:settings"))
-
-    testImplementation(Dependencies.JUnitTest)
-    androidTestImplementation(Dependencies.ExtUnit)
-    androidTestImplementation(Dependencies.Espresso)
-    androidTestImplementation(Dependencies.ComposeTest)
-    debugImplementation(Dependencies.ComposeTool)
-    debugImplementation(Dependencies.TestMan)
-
-    // Paging Compose
-    implementation(Dependencies.ComposePager)
-    implementation(Dependencies.PagerIndicator)
-
-    // Coroutines
-    implementation(Dependencies.Coroutines)
-    implementation(Dependencies.AndroidCoroutine)
-
-    // Coroutine Lifecycle Scopes
-    implementation(Dependencies.LifecycleScope)
-    implementation(Dependencies.RuntimeScope)
-
-    // Retrofit
-    implementation(Dependencies.Retrofit)
-    implementation(Dependencies.GsonConverter)
-    implementation(Dependencies.Okhttp)
-    implementation(Dependencies.Interceptor)
-
-    // Coil
-    implementation(Dependencies.Coil)
-    implementation(Dependencies.AccCoil)
-
-    // Hilt
-    implementation(Dependencies.Hilt)
-    kapt(Dependencies.KaptHilt)
-    implementation(Dependencies.HiltVM)
-    kapt(Dependencies.CompHilt)
-    implementation(Dependencies.HiltNavigation)
-
-    // Room
-    implementation(Dependencies.RoomRun)
-    implementation(Dependencies.RoomKtx)
-    annotationProcessor(Dependencies.RoomAn)
-    kapt(Dependencies.RoomComp)
-
-    // Jsoup
-    implementation(Dependencies.Jsoup)
-
-    // Lottie
-    implementation(Dependencies.Lottie)
-
-    // Test
-    testImplementation(Dependencies.CoreTest)
-    testImplementation(Dependencies.JUnitTest)
-    testImplementation(Dependencies.ArchTest)
-    testImplementation(Dependencies.CoroutineTest)
-    androidTestImplementation(Dependencies.Truth)
-    debugImplementation(Dependencies.ComposeUITest)
-
-    androidTestImplementation(Dependencies.HiltTest)
-    kaptAndroidTest(Dependencies.HiltAndroidTest)
-    androidTestImplementation(Dependencies.JUnitTest)
-    androidTestImplementation(Dependencies.CoroutineTest)
-    androidTestImplementation(Dependencies.ArchTest)
-    androidTestImplementation(Dependencies.KtxTest)
-    androidTestImplementation(Dependencies.ExtUnitTest)
-    androidTestImplementation(Dependencies.Runner)
-    androidTestImplementation(Dependencies.NavigationTesting)
-}
-*/
-
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -162,7 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "com.sdk.foddy.HiltTestRunner"
+        testInstrumentationRunner "ru.itis.cooking.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -196,12 +51,12 @@ android {
 
 dependencies {
 
-    implementation Dependencies.KotlinVersion
-    implementation Dependencies.LifeCycleKtx
-    implementation Dependencies.AppCompat
-    implementation Dependencies.ComposeUi
-    implementation Dependencies.CompPreview
-    implementation Dependencies.MaterialDesign
+    implementation libs.androidx.ktx
+    implementation libs.lifecycle.ktx
+    implementation libs.activity.compose
+    implementation libs.compose.ui
+    implementation libs.compose.ui.tooling.preview
+    implementation libs.compose.material
 
     implementation project(':core:data')
     implementation project(':core:domain')
@@ -214,70 +69,70 @@ dependencies {
     implementation project(':feature:recipes')
     implementation project(':feature:settings')
 
-    testImplementation Dependencies.JUnitTest
-    androidTestImplementation Dependencies.ExtUnit
-    androidTestImplementation Dependencies.Espresso
-    androidTestImplementation Dependencies.ComposeTest
-    debugImplementation Dependencies.ComposeTool
-    debugImplementation Dependencies.TestMan
+    testImplementation libs.junit
+    androidTestImplementation libs.junit.android
+    androidTestImplementation libs.espresso
+    androidTestImplementation libs.compose.testing
+    debugImplementation libs.compose.ui.tooling
+    debugImplementation libs.compose.testing.manifest
 
+    implementation libs.compose.navigation
 
-
-    implementation(Dependencies.ComposeNavigation)
     // Paging Compose
-    implementation Dependencies.ComposePager
-    implementation Dependencies.PagerIndicator
+    implementation libs.pager
+    implementation libs.pager.indicator
 
     // Coroutines
-    implementation Dependencies.Coroutines
-    implementation Dependencies.AndroidCoroutine
+    implementation libs.coroutines
+    implementation libs.coroutines.android
 
-    // Coroutine Lifecycle Scopes
-    implementation Dependencies.LifecycleScope
-    implementation Dependencies.RuntimeScope
+    // Coroutine Lifecycle Scope
+    implementation libs.lifecycle.viewmodel
+
     // Retrofit
-    implementation Dependencies.Retrofit
-    implementation Dependencies.GsonConverter
-    implementation Dependencies.Okhttp
-    implementation Dependencies.Interceptor
-    // Coil
-    implementation Dependencies.Coil
-    implementation Dependencies.AccCoil
+    implementation libs.retrofit
+    implementation libs.gson.converter
 
-    //Dagger - Hilt
-    implementation Dependencies.Hilt
-    kapt Dependencies.KaptHilt
-    implementation Dependencies.HiltVM
-    kapt Dependencies.CompHilt
-    implementation Dependencies.HiltNavigation
+    // OkHttp
+    implementation libs.okhttp
+    implementation libs.okhttp.logging.interceptor
+
+    // Coil
+    implementation libs.coil
+    implementation libs.coil.accompanist
+
+    // Hilt
+    implementation libs.hilt
+    kapt libs.hilt.android.compiler
+    implementation libs.hilt.viewmodel
+    kapt libs.hilt.compiler
+    implementation libs.hilt.navigation.compose
 
     // Room
-    implementation Dependencies.RoomRun
-    implementation Dependencies.RoomKtx
-    annotationProcessor Dependencies.RoomAn
-    kapt Dependencies.RoomComp
+    implementation libs.room.runtime
+    implementation libs.room.ktx
+    kapt libs.room.compiler
 
     // Jsoup
-    implementation Dependencies.Jsoup
+    implementation libs.jsoup
 
     // Lottie
-    implementation Dependencies.Lottie
+    implementation libs.lottie
 
     // Test
-    testImplementation Dependencies.CoreTest
-    testImplementation Dependencies.JUnitTest
-    testImplementation Dependencies.ArchTest
-    testImplementation Dependencies.CoroutineTest
-    androidTestImplementation Dependencies.Truth
-    debugImplementation Dependencies.ComposeUITest
+    testImplementation libs.core.testing
+    testImplementation libs.junit
+    testImplementation libs.core.testing.androidx
+    testImplementation libs.coroutines.testing
+    androidTestImplementation libs.truth
+    debugImplementation libs.compose.testing.manifest
 
-    androidTestImplementation Dependencies.HiltTest
-    kaptAndroidTest Dependencies.HiltAndroidTest
-    androidTestImplementation Dependencies.JUnitTest
-    androidTestImplementation Dependencies.CoroutineTest
-    androidTestImplementation Dependencies.ArchTest
-    androidTestImplementation Dependencies.KtxTest
-    androidTestImplementation Dependencies.ExtUnitTest
-    androidTestImplementation Dependencies.Runner
-    androidTestImplementation Dependencies.NavigationTesting
+    androidTestImplementation libs.hilt.testing
+    kaptAndroidTest libs.hilt.testing.compiler
+    androidTestImplementation libs.junit
+    androidTestImplementation libs.coroutines.testing
+    androidTestImplementation libs.core.testing.androidx
+    androidTestImplementation libs.junit.android
+    androidTestImplementation libs.core.testing.runner
+    androidTestImplementation libs.navigation.testing
 }

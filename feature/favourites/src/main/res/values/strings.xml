@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="favourites_title">Favourites</string>
+    <string name="delete_favourites_alert_title">Delete all favorite foods</string>
+    <string name="delete_favourites_alert_subtitle">This action cannot be undone</string>
+    <string name="delete_favourites_alert_confirm">Delete</string>
+    <string name="delete_favourites_alert_cancel">Cancel</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overview_tab">Overview</string>
+    <string name="ingredients_tab">Ingredients</string>
+    <string name="instructions_tab">Instructions</string>
+    <string name="step">Step %d.</string>
+</resources>

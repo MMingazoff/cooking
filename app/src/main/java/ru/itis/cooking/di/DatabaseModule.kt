@@ -22,6 +22,7 @@ object DatabaseModule {
     fun provideDataStoreManager(@ApplicationContext context: Context): DataStoreManager {
         return DataStoreManager(context)
     }
+
     @[Provides Singleton]
     fun provideLocalRepository(manager: DataStoreManager, dao: FoodDao): LocalRepository {
         return LocalRepositoryImpl(manager, dao)

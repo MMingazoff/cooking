@@ -50,19 +50,19 @@ fun IngredientItem(
                     .padding(start = 20.dp),
                 verticalArrangement = Arrangement.SpaceAround
             ) {
-                IngText(
+                IngredientText(
                     text = ingredient.aisle.toString(),
                     size = 16
                 )
-                IngText(
+                IngredientText(
                     text = ingredient.consistency.lowercase(),
                     size = 14
                 )
-                IngText(
+                IngredientText(
                     text = "${ingredient.amount} ${ingredient.unit}",
                     size = 14
                 )
-                IngText(
+                IngredientText(
                     text = ingredient.original,
                     size = 14
                 )
@@ -72,13 +72,13 @@ fun IngredientItem(
 }
 
 @Composable
-fun IngText(
+fun IngredientText(
     text: String,
     size: Int,
 ) {
     Text(
         text = text,
-        fontSize = (size).sp,
+        fontSize = size.sp,
         color = MaterialTheme.colorScheme.onSecondary,
         maxLines = 1,
         fontFamily = ItimFont,

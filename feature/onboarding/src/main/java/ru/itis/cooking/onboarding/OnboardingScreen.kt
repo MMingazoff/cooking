@@ -1,5 +1,6 @@
 package ru.itis.cooking.onboarding
 
+import androidx.annotation.RawRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +38,7 @@ import ru.itis.cooking.core.navigation.Graph
 import ru.itis.cooking.core.ui.components.AppText
 import ru.itis.cooking.core.ui.components.LottieAnim
 import ru.itis.cooking.core.ui.theme.ItimFont
+import ru.itis.cooking.onboarding.splash.SplashScreenEvent
 import ru.itis.cooking.onboarding.splash.SplashViewModel
 
 @OptIn(ExperimentalPagerApi::class)
@@ -50,11 +53,11 @@ fun OnboardingScreen(
         R.raw.pager2,
         R.raw.pager3
     )
-    val map = mapOf(
-        "Browse" to "Display recipes to inspire visitors when they browse your own packaged foods (whether dips, sauces, pickles, wraps, you name it!)",
-        "Order" to "Easy order, fast delivery and comfort payment.",
-        "Enjoy" to "Enjoy your foods, enjoy your life. Life is combination magic and pasta )"
-    ).toList()
+    val map = listOf(
+        stringResource(id = R.string.onboarding_page1_title) to stringResource(id = R.string.onboarding_page1_content),
+        stringResource(id = R.string.onboarding_page2_title) to stringResource(id = R.string.onboarding_page2_content),
+        stringResource(id = R.string.onboarding_page3_title) to stringResource(id = R.string.onboarding_page3_content),
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +73,7 @@ fun OnboardingScreen(
                 .fillMaxSize()
                 .weight(2.5f)
         ) { index ->
-            Page(title = map[index].first, desc = map[index].second, anim = anim[index])
+            Page(title = map[index].first, content = map[index].second, anim = anim[index])
         }
         Box(
             modifier = Modifier
@@ -85,7 +88,7 @@ fun OnboardingScreen(
             ) {
                 ElevatedButton(
                     onClick = {
-                        viewModel.saveUserVisiting(true)
+                        viewModel.accept(SplashScreenEvent.SetUserVisited)
                         navHostController.navigate(Graph.MainGraph.graph) {
                             popUpTo(Graph.SplashGraph.Onboarding.route) {
                                 inclusive = true
@@ -116,8 +119,8 @@ fun OnboardingScreen(
 @Composable
 fun Page(
     title: String,
-    desc: String,
-    anim: Int
+    content: String,
+    @RawRes anim: Int
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -137,7 +140,7 @@ fun Page(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp),
-            text = desc,
+            text = content,
             fontSize = 16.sp,
             color = MaterialTheme.colorScheme.onSecondary,
             fontFamily = ItimFont,

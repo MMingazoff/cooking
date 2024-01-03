@@ -11,11 +11,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,31 +34,28 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
 import ru.itis.cooking.core.navigation.Graph
 import ru.itis.cooking.core.ui.components.ErrorMessage
 import ru.itis.cooking.core.ui.components.LoadingIcon
 import ru.itis.cooking.core.ui.theme.Purple80
+import ru.itis.cooking.recipes.uiElements.MainTopBar
+import ru.itis.cooking.recipes.uiElements.RecipeItem
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun RecipesScreen(navHostController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current as Activity
-    val viewModel: RecipeViewModel = hiltViewModel()
+    val viewModel: RecipesViewModel = hiltViewModel()
     val keyboardController = LocalSoftwareKeyboardController.current
-    LaunchedEffect(key1 = viewModel.firstTime) {
-        if (viewModel.firstTime) {
-            viewModel.onEvent(RecipeEvent.GetAllRecipes(viewModel.foodState.value))
-            viewModel.firstTime = false
-        }
-    }
     var searchState by remember {
         mutableStateOf(SearchWidgetState.CLOSED)
     }
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
-    val state = viewModel.state.value
+    val state = viewModel.state.collectAsStateWithLifecycle().value
 
     BackHandler {
         if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
@@ -85,22 +83,16 @@ fun RecipesScreen(navHostController: NavHostController) {
                     keyboardController?.hide()
                 },
                 onSearchClicked = {
-                    viewModel.onEvent(RecipeEvent.OnSearchFood(it))
+                    viewModel.accept(RecipesEvent.OnSearchFood(it))
                 }
             )
         },
         sheetContent = {
             SheetContent(
-                foodState = viewModel.foodState.value,
+                foodFilters = state.foodFilters,
                 onChipClicked = { foodType ->
-                    viewModel.onEvent(RecipeEvent.OnSaveFoodType(foodType))
+                    viewModel.accept(RecipesEvent.OnSaveFoodType(foodType))
                 },
-                onApplyClicked = {
-                    coroutineScope.launch {
-                        bottomSheetScaffoldState.bottomSheetState.collapse()
-                        viewModel.onEvent(RecipeEvent.OnApplyClicked)
-                    }
-                }
             )
         },
         scaffoldState = bottomSheetScaffoldState,
@@ -110,7 +102,14 @@ fun RecipesScreen(navHostController: NavHostController) {
             modifier = Modifier.blur(
                 if (bottomSheetScaffoldState.bottomSheetState.isExpanded) 5.dp else 0.dp
             ),
-            color = androidx.compose.material3.MaterialTheme.colorScheme.secondaryContainer
+            onClick = {
+                if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+                    coroutineScope.launch {
+                        bottomSheetScaffoldState.bottomSheetState.collapse()
+                    }
+                }
+            },
+            color = MaterialTheme.colorScheme.secondaryContainer
         ) {
             LazyColumn(
                 contentPadding = PaddingValues(all = 5.dp),
@@ -118,9 +117,9 @@ fun RecipesScreen(navHostController: NavHostController) {
                     testTag = "RecipeScreenLazyColumn"
                 }
             ) {
-                if (state.isLoading.not()) {
+                if (!state.isLoading) {
                     items(
-                        items = state.success,
+                        items = state.foodList,
                         key = { it.foodId }
                     ) {
                         RecipeItem(
@@ -149,8 +148,8 @@ fun RecipesScreen(navHostController: NavHostController) {
                     }
                 },
                 isLoading = state.isLoading,
-                error = state.error,
-                isListEmpty = state.success.isEmpty()
+                error = state.errorMessage,
+                isListEmpty = state.foodList.isEmpty()
             )
         }
     }

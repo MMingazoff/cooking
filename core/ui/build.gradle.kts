@@ -32,20 +32,20 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.KotlinVersion)
-    implementation(Dependencies.LifeCycleKtx)
-    implementation(Dependencies.AppCompat)
-    implementation(Dependencies.ComposeUi)
-    implementation(Dependencies.CompPreview)
-    implementation(Dependencies.MaterialDesign)
+    implementation(libs.androidx.ktx)
+    implementation(libs.lifecycle.ktx)
+    implementation(libs.activity.compose)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material)
 
     // Coil
-    implementation(Dependencies.Coil)
-    implementation(Dependencies.AccCoil)
+    implementation(libs.coil)
+    implementation(libs.coil.accompanist)
 
     // Lottie
-    implementation(Dependencies.Lottie)
+    implementation(libs.lottie)
 
     // Jsoup
-    implementation(Dependencies.Jsoup)
+    implementation(libs.jsoup)
 }

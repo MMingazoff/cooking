@@ -9,24 +9,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import ru.itis.cooking.core.data.util.Constants
-import ru.itis.cooking.core.domain.model.FoodType
+import ru.itis.cooking.core.domain.model.FoodFilters
 import ru.itis.cooking.core.ui.components.AppText
 import ru.itis.cooking.core.ui.components.Chip
 
 @Composable
 fun SheetContent(
-    onApplyClicked: () -> Unit,
-    onChipClicked: (FoodType) -> Unit,
-    foodState: FoodType,
+    onChipClicked: (FoodFilters) -> Unit,
+    foodFilters: FoodFilters,
 ) {
     Column(
         modifier = Modifier
@@ -40,7 +37,7 @@ fun SheetContent(
     ) {
         AppText(
             modifier = Modifier.padding(start = 15.dp),
-            text = "Meal Type",
+            text = stringResource(id = R.string.food_filters_meal_type_title),
             size = 20,
             color = MaterialTheme.colorScheme.onSecondary
         )
@@ -49,16 +46,16 @@ fun SheetContent(
                 .fillMaxWidth(),
             contentPadding = PaddingValues(10.dp)
         ) {
-            itemsIndexed(Constants.mealTypes) { index, item ->
+            itemsIndexed(FoodFilters.mealTypes) { index, item ->
                 Chip(
-                    isSelected = foodState.mIndex == index,
+                    isSelected = foodFilters.mIndex == index,
                     onClicked = {
                         onChipClicked(
-                            FoodType(
+                            FoodFilters(
                                 mIndex = index,
                                 mType = item,
-                                dIndex = foodState.dIndex,
-                                dType = foodState.dType
+                                dIndex = foodFilters.dIndex,
+                                dType = foodFilters.dType
                             )
                         )
                     },
@@ -68,7 +65,7 @@ fun SheetContent(
         }
         AppText(
             modifier = Modifier.padding(start = 15.dp),
-            text = "Diet Type",
+            text = stringResource(id = R.string.food_filters_diet_type_title),
             size = 20,
             color = MaterialTheme.colorScheme.onSecondary
         )
@@ -77,43 +74,22 @@ fun SheetContent(
                 .fillMaxWidth(),
             contentPadding = PaddingValues(10.dp)
         ) {
-            itemsIndexed(Constants.dietTypes) { index, item ->
+            itemsIndexed(FoodFilters.dietTypes) { index, item ->
                 Chip(
-                    isSelected = foodState.dIndex == index,
+                    isSelected = foodFilters.dIndex == index,
                     onClicked = {
                         onChipClicked(
-                            FoodType(
+                            FoodFilters(
                                 dIndex = index,
                                 dType = item,
-                                mIndex = foodState.mIndex,
-                                mType = foodState.mType
+                                mIndex = foodFilters.mIndex,
+                                mType = foodFilters.mType
                             )
                         )
                     },
                     text = item
                 )
             }
-        }
-        ElevatedButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
-                .padding(horizontal = 20.dp)
-                .semantics {
-                    contentDescription = "ApplyBtn"
-                },
-            onClick = {
-                onApplyClicked()
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.onTertiaryContainer
-            )
-        ) {
-            AppText(
-                text = "Apply",
-                size = 18,
-                color = MaterialTheme.colorScheme.onSecondary
-            )
         }
     }
 }

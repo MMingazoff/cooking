@@ -20,7 +20,7 @@ class SettingsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            useCases.getThemeUseCase(Unit).collectLatest { theme ->
+            useCases.getThemeUseCase().collectLatest { theme ->
                 _themeState.update {
                     theme
                 }

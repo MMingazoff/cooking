@@ -24,27 +24,28 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.KotlinVersion)
-    testImplementation(Dependencies.JUnitTest)
+    implementation(libs.androidx.ktx)
+    testImplementation(libs.junit)
 
     // Hilt
-    implementation(Dependencies.Hilt)
-    kapt(Dependencies.KaptHilt)
-    implementation(Dependencies.HiltVM)
-    kapt(Dependencies.CompHilt)
-    implementation(Dependencies.HiltNavigation)
-    implementation(Dependencies.GsonConverter)
+    implementation(libs.hilt)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.hilt.viewmodel)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+
+    implementation(libs.gson.converter)
 
     // Room
-    implementation(Dependencies.RoomRun)
-    implementation(Dependencies.RoomKtx)
-    annotationProcessor(Dependencies.RoomAn)
-    kapt(Dependencies.RoomComp)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
 
     // Testing
-    testImplementation(Dependencies.JUnitTest)
-    testImplementation(Dependencies.ArchTest)
-    testImplementation(Dependencies.Truth)
-    testImplementation(Dependencies.HiltTest)
-    kaptTest(Dependencies.HiltAndroidTest)
+    testImplementation(libs.junit)
+    testImplementation(libs.core.testing.androidx)
+    testImplementation(libs.truth)
+    testImplementation(libs.hilt.testing)
+    kaptTest(libs.hilt.testing.compiler)
 }

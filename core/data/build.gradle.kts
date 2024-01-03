@@ -23,31 +23,33 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.KotlinVersion)
-    implementation(Dependencies.LifeCycleKtx)
-    implementation(Dependencies.AppCompat)
+    implementation(libs.androidx.ktx)
+    implementation(libs.lifecycle.ktx)
+    implementation(libs.activity.compose)
 
     implementation(project(":core:domain"))
 
     // Retrofit
-    implementation(Dependencies.Retrofit)
-    implementation(Dependencies.GsonConverter)
-    implementation(Dependencies.Okhttp)
-    implementation(Dependencies.Interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.gson.converter)
+
+    // OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
 
     // Room
-    implementation(Dependencies.RoomRun)
-    implementation(Dependencies.RoomKtx)
-    annotationProcessor(Dependencies.RoomAn)
-    kapt(Dependencies.RoomComp)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
 
     // Hilt
-    implementation(Dependencies.Hilt)
-    kapt(Dependencies.KaptHilt)
-    implementation(Dependencies.HiltVM)
-    kapt(Dependencies.CompHilt)
-    implementation(Dependencies.HiltNavigation)
+    implementation(libs.hilt)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.hilt.viewmodel)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
 
     // Preferences DataStore
-    implementation(Dependencies.DataStore)
+    implementation(libs.datastore)
 }

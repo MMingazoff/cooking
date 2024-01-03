@@ -14,9 +14,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 import ru.itis.cooking.core.navigation.Graph
@@ -26,8 +28,10 @@ import ru.itis.cooking.onboarding.R
 @Composable
 fun SplashScreen(navHostController: NavHostController) {
     val viewModel: SplashViewModel = hiltViewModel()
-    LaunchedEffect(key1 = true) {
-        val route = if (viewModel.userState.value) {
+    val state = viewModel.state.collectAsStateWithLifecycle().value
+
+    LaunchedEffect(state) {
+        val route = if (state.hasUserViewedOnboarding) {
             Graph.MainGraph.graph
         } else {
             Graph.SplashGraph.Onboarding.route
@@ -47,14 +51,14 @@ fun SplashScreen(navHostController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Cooking",
+            text = stringResource(id = R.string.splash_screen_title),
             fontSize = 60.sp,
             color = MaterialTheme.colorScheme.onSecondary,
             fontFamily = AppFont
         )
         Spacer(modifier = Modifier.height(20.dp))
         Image(
-            painter = painterResource(id = R.drawable.back),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = "Splash Logo"
         )
     }

@@ -1,34 +1,35 @@
 package ru.itis.cooking.onboarding.splash
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ru.itis.cooking.core.domain.usecase.base.AllUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import ru.itis.cooking.core.architecture.BaseViewModel
+import ru.itis.cooking.core.domain.usecase.base.AllUseCases
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val useCases: AllUseCases
-) : ViewModel() {
-    private val _userState: MutableState<Boolean> = mutableStateOf(false)
-    val userState: State<Boolean> get() = _userState
+    private val useCases: AllUseCases,
+) : BaseViewModel<SplashScreenState, SplashScreenAction, SplashScreenEvent>(
+    initialState = SplashScreenState(),
+) {
 
     init {
-        viewModelScope.launch {
-            useCases.getUserVisitingUseCase.invoke(Unit).collectLatest {
-                _userState.value = it
-            }
-        }
+        accept(SplashScreenEvent.OnInit)
     }
 
-    fun saveUserVisiting(boolean: Boolean) {
-        viewModelScope.launch {
-            useCases.saveUserVisitingUseCase(boolean)
+    override fun accept(event: SplashScreenEvent) {
+        when (event) {
+            SplashScreenEvent.OnInit -> viewModelScope.launch {
+                useCases.getUserVisitingUseCase().collectLatest {
+                    state { copy(hasUserViewedOnboarding = it) }
+                }
+            }
+
+            SplashScreenEvent.SetUserVisited -> viewModelScope.launch {
+                useCases.saveUserVisitingUseCase(true)
+            }
         }
     }
 }

@@ -36,14 +36,14 @@ fun AppImage(
                     contentDescription = "Image",
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding((imagePadding).dp),
+                        .padding(imagePadding.dp),
                     contentScale = contentScale
                 )
             } else {
                 CircularProgressIndicator(
-                    modifier = Modifier.size((indicatorSize).dp),
+                    modifier = Modifier.size(indicatorSize.dp),
                     color = MaterialTheme.colorScheme.onSecondary,
-                    strokeWidth = (indicatorWidth).dp
+                    strokeWidth = indicatorWidth.dp
                 )
             }
         }

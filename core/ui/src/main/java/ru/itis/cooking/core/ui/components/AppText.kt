@@ -21,7 +21,7 @@ fun AppText(
     Text(
         modifier = modifier,
         text = text,
-        fontSize = (size).sp,
+        fontSize = size.sp,
         maxLines = maxLine,
         color = color,
         fontFamily = fontFamily,
