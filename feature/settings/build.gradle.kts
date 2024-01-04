@@ -36,6 +36,7 @@ dependencies {
 
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.ktx)
+    implementation(libs.lifecycle.compose)
     implementation(libs.activity.compose)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)

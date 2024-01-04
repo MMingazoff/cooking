@@ -5,13 +5,14 @@ import ru.itis.cooking.core.domain.model.FoodFilters
 import ru.itis.cooking.core.domain.repository.LocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.itis.cooking.core.domain.model.Theme
 
 class FakeLocalRepository : LocalRepository {
 
     private val fakeFoodList = mutableListOf<Food>()
     private var foodFilters = FoodFilters()
     private var isUserVisited = false
-    private var savedIndex = 0
+    private var savedTheme = Theme.AUTOMATIC
 
     override suspend fun saveFoodType(foodFilters: FoodFilters) {
         this.foodFilters = foodFilters
@@ -21,12 +22,12 @@ class FakeLocalRepository : LocalRepository {
         return flow { emit(foodFilters) }
     }
 
-    override suspend fun saveTheme(index: Int) {
-        savedIndex = index
+    override suspend fun saveTheme(theme: Theme) {
+        savedTheme = theme
     }
 
-    override fun getTheme(): Flow<Int> {
-        return flow { emit(savedIndex) }
+    override fun getTheme(): Flow<Theme> {
+        return flow { emit(savedTheme) }
     }
 
     override suspend fun saveUserVisiting(boolean: Boolean) {

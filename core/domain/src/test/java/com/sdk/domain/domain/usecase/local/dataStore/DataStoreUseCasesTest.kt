@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import ru.itis.cooking.core.domain.model.Theme
 import ru.itis.cooking.core.domain.usecase.local.dataStore.GetFoodFiltersUseCase
 import ru.itis.cooking.core.domain.usecase.local.dataStore.GetThemeUseCase
 import ru.itis.cooking.core.domain.usecase.local.dataStore.GetUserVisitingUseCase
@@ -68,13 +69,13 @@ class DataStoreUseCasesTest {
     @Test
     fun `By default theme index returns zero`() = runBlocking {
         val res = getThemeUseCase().first()
-        assertThat(res).isEqualTo(0)
+        assertThat(res).isEqualTo(Theme.AUTOMATIC)
     }
 
     @Test
     fun `Save theme index and get it`() = runBlocking {
-        saveThemeUseCase(2)
+        saveThemeUseCase(Theme.DARK)
         val res = getThemeUseCase().first()
-        assertThat(res).isLessThan(3)
+        assertThat(res).isEqualTo(Theme.DARK)
     }
 }

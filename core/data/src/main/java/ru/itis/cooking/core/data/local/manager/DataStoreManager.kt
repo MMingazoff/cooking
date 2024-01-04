@@ -30,14 +30,14 @@ class DataStoreManager(private val context: Context) {
         )
     }
 
-    suspend fun saveTheme(index: Int) {
+    suspend fun saveTheme(theme: String) {
         context.dataStore.edit {
-            it[themIndex] = index
+            it[themeKey] = theme
         }
     }
 
-    fun getTheme(): Flow<Int> = context.dataStore.data.map {
-        it[themIndex] ?: 0
+    fun getTheme(): Flow<String> = context.dataStore.data.map {
+        it[themeKey] ?: ""
     }
 
     suspend fun saveUserVisiting(boolean: Boolean) {
@@ -59,7 +59,7 @@ class DataStoreManager(private val context: Context) {
         private val dIndex = intPreferencesKey("dIndex")
         private val dType = stringPreferencesKey("dType")
 
-        private val themIndex = intPreferencesKey("themeIndex")
+        private val themeKey = stringPreferencesKey("theme")
 
         private val isUserVisited = booleanPreferencesKey("isUserVisited")
     }

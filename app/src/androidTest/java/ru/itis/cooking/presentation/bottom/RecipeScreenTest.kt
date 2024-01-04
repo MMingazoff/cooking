@@ -16,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import ru.itis.cooking.MainActivity
 import ru.itis.cooking.core.domain.model.FoodFilters
+import ru.itis.cooking.core.domain.model.Theme
 import ru.itis.cooking.core.ui.theme.CookingTheme
 import ru.itis.cooking.di.DatabaseModule
 import ru.itis.cooking.di.NetworkModule
@@ -36,7 +37,7 @@ class RecipeScreenTest {
         hiltRule.inject()
         composeRule.setContent {
             val navHostController = rememberNavController()
-            CookingTheme(darkTheme = true) {
+            CookingTheme(theme = Theme.AUTOMATIC) {
                 RecipesScreen(navHostController = navHostController)
             }
         }

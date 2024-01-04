@@ -14,6 +14,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import ru.itis.cooking.MainActivity
+import ru.itis.cooking.core.domain.model.Theme
 import ru.itis.cooking.core.ui.theme.CookingTheme
 import ru.itis.cooking.di.DatabaseModule
 import ru.itis.cooking.di.NetworkModule
@@ -35,7 +36,7 @@ class SplashScreenTest {
         hiltRule.inject()
         composeRule.setContent {
             navHostController = TestNavHostController(LocalContext.current)
-            CookingTheme(darkTheme = true) {
+            CookingTheme(theme = Theme.AUTOMATIC) {
                 navHostController.navigatorProvider.addNavigator(ComposeNavigator())
                 RootNavigation(navHostController = navHostController)
             }

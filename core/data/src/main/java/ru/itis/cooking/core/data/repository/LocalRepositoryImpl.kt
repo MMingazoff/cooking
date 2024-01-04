@@ -1,11 +1,13 @@
 package ru.itis.cooking.core.data.repository
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ru.itis.cooking.core.data.local.database.FoodDao
 import ru.itis.cooking.core.data.local.manager.DataStoreManager
 import ru.itis.cooking.core.domain.model.Food
 import ru.itis.cooking.core.domain.model.FoodFilters
+import ru.itis.cooking.core.domain.model.Theme
 import ru.itis.cooking.core.domain.repository.LocalRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalRepositoryImpl @Inject constructor(
@@ -21,12 +23,18 @@ class LocalRepositoryImpl @Inject constructor(
         return dataStoreManager.getFoodFilters()
     }
 
-    override suspend fun saveTheme(index: Int) {
-        dataStoreManager.saveTheme(index)
+    override suspend fun saveTheme(theme: Theme) {
+        dataStoreManager.saveTheme(theme.toString())
     }
 
-    override fun getTheme(): Flow<Int> {
-        return dataStoreManager.getTheme()
+    override fun getTheme(): Flow<Theme> {
+        return dataStoreManager.getTheme().map {
+            try {
+                Theme.valueOf(it)
+            } catch (_: IllegalArgumentException) {
+                Theme.AUTOMATIC
+            }
+        }
     }
 
     override suspend fun saveUserVisiting(boolean: Boolean) {

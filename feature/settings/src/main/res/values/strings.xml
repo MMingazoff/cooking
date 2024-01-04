@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="automatic">Automatic</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="theme_title">Theme</string>
+</resources>

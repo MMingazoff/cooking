@@ -48,4 +48,5 @@ dependencies {
 
     // Jsoup
     implementation(libs.jsoup)
+    implementation(project(":core:domain"))
 }
