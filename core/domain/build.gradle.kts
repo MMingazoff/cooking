@@ -19,6 +19,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    android {
+        lint {
+            disable += setOf(
+                "JvmStaticProvidesInObjectDetector", "FieldSiteTargetOnQualifierAnnotation",
+                "ModuleCompanionObjects", "ModuleCompanionObjectsNotInModuleParent"
+            )
+        }
+    }
 }
 
 dependencies {
